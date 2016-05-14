@@ -4,9 +4,9 @@ RUN yum -y update;
 RUN yum -y clean all;
 
 # Installing necessary tools
-RUN yum install -y java-1.7.0-openjdk wget dialog curl sudo lsof vim axel telnet java-1.7.0-openjdk java-1.7.0-openjdk-devel nano openssh-server
+RUN yum install -y java-1.7.0-openjdk-1.7.0.85 wget dialog curl sudo lsof vim axel telnet java-1.7.0-openjdk-devel-1.7.0.85 nano openssh-server
 
-RUN  useradd guest
+RUN useradd guest -g ftp -u 1000
 RUN echo guest | passwd guest --stdin
 
 ENV HOME /home/guest
@@ -40,9 +40,15 @@ ADD startup_script.sh /usr/bin/startup_script.sh
 RUN chmod +x /usr/bin/startup_script.sh
 
 ADD setenv.sh /home/guest/setenv.sh
-RUN chown guest:guest setenv.sh
+RUN chown guest:ftp setenv.sh
 RUN echo . ./setenv.sh >> .bashrc
 
 ADD spark-defaults.conf /home/guest/spark/conf/spark-defaults.conf
-RUN chown guest:guest /home/guest/spark/conf/spark-defaults.conf
+RUN chown guest:ftp /home/guest/spark/conf/spark-defaults.conf
+
+ENV JAVA_HOME /etc/alternatives/java_sdk
+
+ADD datastax.repo /etc/yum.repos.d/datastax.repo
+RUN yum install -y dsc21-2.1.7-1  cassandra2.1.7-1 cassandra21-tools-2.1.7-1
+RUN echo "/usr/lib/python2.7/site-packages" |tee /home/guest/anaconda2/lib/python2.7/site-packages/cqlshlib.pth
 
