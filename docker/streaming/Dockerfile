@@ -10,7 +10,7 @@ RUN yum install -y  wget dialog curl sudo lsof vim axel telnet nano openssh-serv
 RUN yum install -y java-1.7.0-openjdk-1.7.0.85 java-1.7.0-openjdk-devel-1.7.0.85 
 
 #Create guest user
-RUN useradd guest -g guest -u 1000
+RUN useradd guest
 RUN echo guest | passwd guest --stdin
 
 ENV HOME /home/guest
@@ -42,7 +42,7 @@ RUN pip install --pre toree
 RUN jupyter toree install --user
 
 #Install Kafka Python module
-RUN pip install kafka-python
+#RUN pip install kafka-python
 
 USER root
 
@@ -64,3 +64,5 @@ ADD datastax.repo /etc/yum.repos.d/datastax.repo
 RUN yum install -y dsc21-2.1.7-1  cassandra2.1.7-1 cassandra21-tools-2.1.7-1
 RUN echo "/usr/lib/python2.7/site-packages" |tee /home/guest/anaconda2/lib/python2.7/site-packages/cqlshlib.pth
 
+#For adding write permissions to shared folders. Change 1001 to the user ID of the user host.
+RUN usermod -u 1001 guest
