@@ -4,7 +4,7 @@ RUN yum -y update;
 RUN yum -y clean all;
 
 # Install basic tools
-RUN yum install -y  wget dialog curl sudo lsof vim axel telnet nano openssh-server bzip2 passwd tar bc git
+RUN yum install -y  wget dialog curl sudo lsof vim axel telnet nano openssh-server openssh-clients bzip2 passwd tar bc git unzip
 
 #Install Java
 RUN yum install -y java-1.7.0-openjdk-1.7.0.85 java-1.7.0-openjdk-devel-1.7.0.85 
@@ -19,9 +19,13 @@ WORKDIR $HOME
 USER guest
 
 #Install Spark
-RUN wget http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz
-RUN tar xvzf spark-1.6.1-bin-hadoop2.6.tgz
-RUN mv spark-1.6.1-bin-hadoop2.6 spark
+#RUN wget http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz
+#RUN tar xvzf spark-1.6.1-bin-hadoop2.6.tgz
+#RUN mv spark-1.6.1-bin-hadoop2.6 spark
+RUN wget http://litpc45.ulb.ac.be/spark-1.6.1-bin-hadoop2.6-scala2.11.tgz
+RUN tar xvzf spark-1.6.1-bin-hadoop2.6-scala2.11.tgz
+RUN mv spark-1.6.1-bin-hadoop2.6-scala2.11 spark
+
 ENV SPARK_HOME $HOME/spark
 
 #Install Kafka
