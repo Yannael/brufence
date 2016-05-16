@@ -4,7 +4,7 @@ RUN yum -y update;
 RUN yum -y clean all;
 
 # Install basic tools
-RUN yum install -y  wget dialog curl sudo lsof vim axel telnet nano openssh-server bzip2 passwd tar
+RUN yum install -y  wget dialog curl sudo lsof vim axel telnet nano openssh-server bzip2 passwd tar bc git
 
 #Install Java
 RUN yum install -y java-1.7.0-openjdk-1.7.0.85 java-1.7.0-openjdk-devel-1.7.0.85 
@@ -43,6 +43,11 @@ RUN jupyter toree install --user
 
 #Install Kafka Python module
 #RUN pip install kafka-python
+
+#Install sbt
+RUN wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.11/sbt-0.13.11.tgz
+RUN tar xvzf sbt-0.13.11.tgz
+ENV PATH $HOME/sbt/bin:$PATH 
 
 USER root
 
