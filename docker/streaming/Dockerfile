@@ -1,3 +1,6 @@
+#Container for Kafka - Spark streaming - Cassandra
+#IMPORTANT: If you wish to share folder between your host and this container, make sure the UID for user guest is the same as your UID
+#Check https://github.com/Yannael/brufence/blob/master/docker/streaming/README.md for details
 FROM centos:centos6
 
 RUN yum -y update;
@@ -9,7 +12,7 @@ RUN yum install -y  wget dialog curl sudo lsof vim axel telnet nano openssh-serv
 #Install Java
 RUN yum install -y java-1.7.0-openjdk-1.7.0.85 java-1.7.0-openjdk-devel-1.7.0.85 
 
-#Create guest user
+#Create guest user. IMPORTANT: Change here UID 1000 to your host UID if you plan to share folders.
 RUN useradd guest -u 1000
 RUN echo guest | passwd guest --stdin
 
@@ -24,7 +27,6 @@ USER guest
 #RUN mv spark-1.6.1-bin-hadoop2.6 spark
 RUN wget http://litpc45.ulb.ac.be/spark-1.6.1-bin-hadoop2.6-scala2.11.tgz
 RUN tar xvzf spark-1.6.1-bin-hadoop2.6-scala2.11.tgz
-RUN mv spark-1.6.1-bin-hadoop2.6-scala2.11 spark
 
 ENV SPARK_HOME $HOME/spark
 
