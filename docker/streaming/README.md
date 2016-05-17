@@ -80,7 +80,7 @@ RUN useradd guest -u 1000
 
 creates the user under which the container will be run as a guest user. The username is 'guest', with password 'guest', and the '-u' parameter sets the linux UID for that user.
 
-In order to make sharing of folder easier between the container and your host, **make sure this UID matches your user UID on the host**. You can see what your host UID is with
+In order to make sharing of folders easier between the container and your host, **make sure this UID matches your user UID on the host**. You can see what your host UID is with
 
 ```
 echo $UID
